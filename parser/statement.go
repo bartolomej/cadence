@@ -630,8 +630,8 @@ func parseFunctionBlock(p *parser) (*ast.FunctionBlock, error) {
 				endToken.EndPos,
 			),
 			ast.Comments{
-				Leading:  startToken.Leading,
-				Trailing: endToken.Trailing,
+				Leading:  startToken.Comments.PackToList(),
+				Trailing: endToken.Comments.PackToList(),
 			},
 		),
 		preConditions,

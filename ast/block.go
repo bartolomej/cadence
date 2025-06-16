@@ -20,7 +20,6 @@ package ast
 
 import (
 	"encoding/json"
-
 	"github.com/turbolent/prettier"
 
 	"github.com/onflow/cadence/common"
@@ -61,14 +60,18 @@ var blockEndDoc prettier.Doc = prettier.Text("}")
 var blockEmptyDoc prettier.Doc = prettier.Text("{}")
 
 func (b *Block) Doc() prettier.Doc {
-	if b.IsEmpty() {
+	if b.IsEmpty() && b.Comments.IsEmpty() {
 		return blockEmptyDoc
 	}
+
+	var statementsDoc prettier.Concat
+	statementsDoc = append(statementsDoc, b.Comments.LeadingDoc())
+	statementsDoc = append(statementsDoc, StatementsDoc(b.Statements))
 
 	return prettier.Concat{
 		blockStartDoc,
 		prettier.Indent{
-			Doc: StatementsDoc(b.Statements),
+			Doc: statementsDoc,
 		},
 		prettier.HardLine{},
 		blockEndDoc,
@@ -170,7 +173,7 @@ var preConditionsKeywordDoc = prettier.Text("pre")
 var postConditionsKeywordDoc = prettier.Text("post")
 
 func (b *FunctionBlock) Doc() prettier.Doc {
-	if b.IsEmpty() {
+	if b.IsEmpty() && b.Block.Comments.IsEmpty() {
 		return blockEmptyDoc
 	}
 
@@ -194,7 +197,9 @@ func (b *FunctionBlock) Doc() prettier.Doc {
 
 	var bodyDoc prettier.Doc
 
-	statementsDoc := StatementsDoc(b.Block.Statements)
+	var statementsDoc prettier.Concat
+	statementsDoc = append(statementsDoc, CommentsToDoc(b.Block.Comments.PackToList()))
+	statementsDoc = append(statementsDoc, StatementsDoc(b.Block.Statements))
 
 	if len(conditionDocs) > 0 {
 		bodyConcatDoc := prettier.Concat(conditionDocs)

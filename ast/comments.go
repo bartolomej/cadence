@@ -12,6 +12,10 @@ type Comments struct {
 	Trailing []*Comment `json:"-"`
 }
 
+func (c Comments) IsEmpty() bool {
+	return len(c.Trailing) == 0 && len(c.Leading) == 0
+}
+
 func (c Comments) PackToList() []*Comment {
 	var comments []*Comment
 	comments = append(comments, c.Leading...)
@@ -39,6 +43,15 @@ func (c Comments) LeadingDoc() prettier.Doc {
 	for _, c := range c.Leading {
 		doc = append(doc, prettier.Text(c.source))
 		doc = append(doc, prettier.HardLine{})
+	}
+	return doc
+}
+
+func CommentsToDoc(comments []*Comment) prettier.Doc {
+	var doc prettier.Concat
+	for _, c := range comments {
+		doc = append(doc, prettier.HardLine{})
+		doc = append(doc, prettier.Text(c.source))
 	}
 	return doc
 }
