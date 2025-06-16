@@ -1480,6 +1480,7 @@ func FunctionDocument(
 	parameterList *ParameterList,
 	returnTypeAnnotation *TypeAnnotation,
 	block *FunctionBlock,
+	comments *Comments,
 ) prettier.Doc {
 
 	var signatureDoc prettier.Concat
@@ -1515,6 +1516,13 @@ func FunctionDocument(
 	}
 
 	var doc prettier.Concat
+
+	if comments != nil {
+		doc = append(
+			doc,
+			comments.LeadingDoc(),
+		)
+	}
 
 	if access != AccessNotSpecified {
 		doc = append(
@@ -1596,6 +1604,7 @@ func (e *FunctionExpression) Doc() prettier.Doc {
 		e.ParameterList,
 		e.ReturnTypeAnnotation,
 		e.FunctionBlock,
+		nil,
 	)
 }
 

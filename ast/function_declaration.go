@@ -190,6 +190,7 @@ func (d *FunctionDeclaration) Doc() prettier.Doc {
 		d.ParameterList,
 		d.ReturnTypeAnnotation,
 		d.FunctionBlock,
+		&d.Comments,
 	)
 }
 
@@ -302,6 +303,7 @@ func (d *SpecialFunctionDeclaration) Doc() prettier.Doc {
 		d.FunctionDeclaration.ParameterList,
 		d.FunctionDeclaration.ReturnTypeAnnotation,
 		d.FunctionDeclaration.FunctionBlock,
+		&d.FunctionDeclaration.Comments,
 	)
 }
 

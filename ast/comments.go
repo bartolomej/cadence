@@ -3,6 +3,7 @@ package ast
 import (
 	"bytes"
 	"github.com/onflow/cadence/common"
+	"github.com/turbolent/prettier"
 	"strings"
 )
 
@@ -30,6 +31,16 @@ func (c Comments) LeadingDocString() string {
 		}
 	}
 	return s.String()
+}
+
+// LeadingDoc prints the leading comments prettier document
+func (c Comments) LeadingDoc() prettier.Doc {
+	var doc prettier.Concat
+	for _, c := range c.Leading {
+		doc = append(doc, prettier.Text(c.source))
+		doc = append(doc, prettier.HardLine{})
+	}
+	return doc
 }
 
 type Comment struct {
