@@ -100,8 +100,13 @@ func (p *Parameter) Doc() prettier.Doc {
 	var parameterDoc prettier.Concat
 
 	if !p.Comments.IsEmpty() {
-		parameterDoc = append(parameterDoc, prettier.HardLine{})
-		parameterDoc = append(parameterDoc, p.Comments.LeadingDoc())
+		if !p.Comments.PackToList()[0].Multiline() {
+			parameterDoc = append(parameterDoc, prettier.HardLine{})
+			parameterDoc = append(parameterDoc, p.Comments.LeadingDoc())
+		} else {
+			parameterDoc = append(parameterDoc, p.Comments.LeadingDoc())
+			parameterDoc = append(parameterDoc, prettier.Text(" "))
+		}
 	}
 
 	if p.Label != "" {

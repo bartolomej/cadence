@@ -46,6 +46,19 @@ fun multiply(
 `)
 	})
 
+	t.Run("inline comments for params", func(t *testing.T) {
+		testPretty(t, `
+fun multiply( /* first multiplier */ x: Int,  /* second multiplier */ y: Int): Int {
+    return x * y
+}
+`,
+			`
+fun multiply(/* first multiplier */ x: Int, /* second multiplier */ y: Int): Int {
+    return x * y
+}
+`)
+	})
+
 	t.Run("multi declarations, with access", func(t *testing.T) {
 		testPretty(t, `
 // Function hello

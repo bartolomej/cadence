@@ -16,6 +16,8 @@ func (c Comments) IsEmpty() bool {
 	return len(c.Trailing) == 0 && len(c.Leading) == 0
 }
 
+// PackToList concatenates leading and trailing comments into a single slice
+// TODO(output-comments): Rename to PackToList
 func (c Comments) PackToList() []*Comment {
 	var comments []*Comment
 	comments = append(comments, c.Leading...)
@@ -75,6 +77,7 @@ var lineCommentDocStringPrefix = []byte("///")
 var lineCommentStringPrefix = []byte("//")
 var blockCommentStringSuffix = []byte("*/")
 
+// Multiline TODO(output-comments): Should we rename to Inline() ?
 func (c Comment) Multiline() bool {
 	return bytes.HasPrefix(c.source, blockCommentStringPrefix)
 }
