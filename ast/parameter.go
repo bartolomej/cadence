@@ -32,7 +32,7 @@ type Parameter struct {
 	Label           string
 	Identifier      Identifier
 	StartPos        Position `json:"-"`
-	Comments
+	Comments        Comments
 }
 
 func NewParameter(
@@ -98,6 +98,11 @@ const parameterDefaultArgumentSeparator = "="
 
 func (p *Parameter) Doc() prettier.Doc {
 	var parameterDoc prettier.Concat
+
+	if !p.Comments.IsEmpty() {
+		parameterDoc = append(parameterDoc, prettier.HardLine{})
+		parameterDoc = append(parameterDoc, p.Comments.LeadingDoc())
+	}
 
 	if p.Label != "" {
 		parameterDoc = append(

@@ -42,7 +42,9 @@ func (c Comments) LeadingDoc() prettier.Doc {
 	var doc prettier.Concat
 	for _, c := range c.Leading {
 		doc = append(doc, prettier.Text(c.source))
-		doc = append(doc, prettier.HardLine{})
+		if !c.Multiline() {
+			doc = append(doc, prettier.HardLine{})
+		}
 	}
 	return doc
 }

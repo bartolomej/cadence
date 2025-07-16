@@ -298,7 +298,11 @@ func TestFunctionDeclaration_Doc(t *testing.T) {
 		Identifier: Identifier{
 			Identifier: "xyz",
 		},
-
+		Comments: Comments{
+			Leading: []*Comment{
+				NewComment(nil, []byte("// before xyz")),
+			},
+		},
 		ParameterList: &ParameterList{
 			Parameters: []*Parameter{
 				{
@@ -327,12 +331,18 @@ func TestFunctionDeclaration_Doc(t *testing.T) {
 		FunctionBlock: &FunctionBlock{
 			Block: &Block{
 				Statements: []Statement{},
+				Comments: Comments{
+					Leading:  []*Comment{NewComment(nil, []byte("// body start"))},
+					Trailing: []*Comment{NewComment(nil, []byte("// body end"))},
+				},
 			},
 		},
 	}
 
 	require.Equal(t,
 		prettier.Concat{
+			prettier.Text("// before xyz"),
+			prettier.HardLine{},
 			prettier.Text("access(all)"),
 			prettier.HardLine{},
 			prettier.Text("view"),

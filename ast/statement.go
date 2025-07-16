@@ -72,17 +72,19 @@ func (s *ReturnStatement) Walk(walkChild func(Element)) {
 }
 
 const returnStatementKeywordDoc = prettier.Text("return")
-const returnStatementKeywordSpaceDoc = prettier.Text("return ")
 
 func (s *ReturnStatement) Doc() prettier.Doc {
-	if s.Expression == nil {
-		return returnStatementKeywordDoc
+	var doc prettier.Concat
+
+	doc = append(doc, s.Comments.LeadingDoc())
+	doc = append(doc, returnStatementKeywordDoc)
+
+	if s.Expression != nil {
+		doc = append(doc, prettier.Space)
+		doc = append(doc, s.Expression.Doc())
 	}
 
-	return prettier.Concat{
-		returnStatementKeywordSpaceDoc,
-		s.Expression.Doc(),
-	}
+	return doc
 }
 
 func (s *ReturnStatement) String() string {
