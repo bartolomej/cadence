@@ -105,7 +105,7 @@ let foo: @AB = x`)
 }
 
 func TestPrettyContractDeclaration(t *testing.T) {
-	t.Run("line comment", func(t *testing.T) {
+	t.Run("line doc comment", func(t *testing.T) {
 		testPretty(t, `
 /// FooBar contract
 ///
@@ -115,7 +115,23 @@ contract FooBar : Foo, Bar {}
 /// FooBar contract
 ///
 access(all)
-contract FooBar : Foo, Bar {}
+contract FooBar: Foo, Bar {}
+`)
+	})
+}
+
+func TestPrettyInterfaceDeclaration(t *testing.T) {
+	t.Run("line doc comment", func(t *testing.T) {
+		testPretty(t, `
+/// FooBar interface
+///
+access(all)
+contract interface FooBar {}
+`, `
+/// FooBar interface
+///
+access(all)
+contract interface FooBar {}
 `)
 	})
 }

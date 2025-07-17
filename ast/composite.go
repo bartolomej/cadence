@@ -149,11 +149,16 @@ func (d *CompositeDeclaration) Doc() prettier.Doc {
 		d.Identifier.Identifier,
 		d.Conformances,
 		d.Members,
+		d.Comments,
 	)
 }
 
 func (d *CompositeDeclaration) EventDoc() prettier.Doc {
 	var doc prettier.Concat
+
+	if len(d.Comments.Leading) > 0 {
+		doc = append(doc, d.Comments.LeadingDoc())
+	}
 
 	if d.Access != AccessNotSpecified {
 		doc = append(
@@ -199,9 +204,14 @@ func CompositeDocument(
 	identifier string,
 	conformances []*NominalType,
 	members *Members,
+	comments Comments,
 ) prettier.Doc {
 
 	var doc prettier.Concat
+
+	if len(comments.Leading) > 0 {
+		doc = append(doc, comments.LeadingDoc())
+	}
 
 	if access != AccessNotSpecified {
 		doc = append(

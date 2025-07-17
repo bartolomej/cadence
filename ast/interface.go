@@ -120,6 +120,7 @@ func (d *InterfaceDeclaration) Doc() prettier.Doc {
 		d.Identifier.Identifier,
 		d.Conformances,
 		d.Members,
+		d.Comments,
 	)
 }
 
