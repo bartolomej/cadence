@@ -188,11 +188,15 @@ event Hello(/* before a */ a: String, /* before b */ b: String)
 func TestPrettyFunctionInvocation(t *testing.T) {
 	t.Run("line comments", func(t *testing.T) {
 		testPretty(t, `
-// say hello
-FooBar.hello()
+fun main() {
+	// say hello
+	FooBar.hello()
+}
 `, `
-// say hello
-FooBar.hello()
+fun main() {
+    // say hello
+    FooBar.hello()
+}
 `)
 	})
 }
@@ -200,11 +204,15 @@ FooBar.hello()
 func TestPrettyVariableAssignment(t *testing.T) {
 	t.Run("line comments", func(t *testing.T) {
 		testPretty(t, `
-// test message
-message = "Hello"
+fun main() {
+	// test message
+	message = "Hello"
+}
 `, `
-// test message
-message = "Hello"
+fun main() {
+    // test message
+    message = "Hello"
+}
 `)
 	})
 }

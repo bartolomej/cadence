@@ -707,7 +707,15 @@ func (e *IdentifierExpression) String() string {
 }
 
 func (e *IdentifierExpression) Doc() prettier.Doc {
-	return prettier.Text(e.Identifier.Identifier)
+	var doc prettier.Concat
+
+	if len(e.Comments.Leading) > 0 {
+		doc = append(doc, e.Comments.LeadingDoc())
+	}
+
+	doc = append(doc, prettier.Text(e.Identifier.Identifier))
+
+	return doc
 }
 
 func (e *IdentifierExpression) MarshalJSON() ([]byte, error) {
