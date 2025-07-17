@@ -65,7 +65,7 @@ func (b *Block) Doc() prettier.Doc {
 	}
 
 	var statementsDoc prettier.Concat
-	statementsDoc = append(statementsDoc, b.Comments.LeadingDoc())
+	statementsDoc = append(statementsDoc, CommentsToDoc(b.Comments.PackToList()))
 	statementsDoc = append(statementsDoc, StatementsDoc(b.Statements))
 
 	return prettier.Concat{

@@ -271,12 +271,21 @@ const ifStatementSpaceElseKeywordSpaceDoc = prettier.Text(" else ")
 func (s *IfStatement) Doc() prettier.Doc {
 	testDoc := s.Test.Doc()
 
-	doc := prettier.Concat{
-		ifStatementIfKeywordSpaceDoc,
-		testDoc,
-		prettier.Space,
-		s.Then.Doc(),
+	doc := prettier.Concat{}
+
+	if len(s.Comments.Leading) > 0 {
+		doc = append(doc, s.Comments.LeadingDoc())
 	}
+
+	doc = append(
+		doc,
+		prettier.Concat{
+			ifStatementIfKeywordSpaceDoc,
+			testDoc,
+			prettier.Space,
+			s.Then.Doc(),
+		},
+	)
 
 	if s.Else != nil && len(s.Else.Statements) > 0 {
 		var elseDoc prettier.Doc
@@ -405,7 +414,7 @@ type ForStatement struct {
 	Block      *Block
 	Identifier Identifier
 	StartPos   Position `json:"-"`
-	Comments
+	Comments   Comments
 }
 
 var _ Element = &ForStatement{}
@@ -455,9 +464,13 @@ const forStatementForKeywordSpaceDoc = prettier.Text("for ")
 const forStatementSpaceInKeywordSpaceDoc = prettier.Text(" in ")
 
 func (s *ForStatement) Doc() prettier.Doc {
-	doc := prettier.Concat{
-		forStatementForKeywordSpaceDoc,
+	doc := prettier.Concat{}
+
+	if len(s.Comments.Leading) > 0 {
+		doc = append(doc, s.Comments.LeadingDoc())
 	}
+
+	doc = append(doc, forStatementForKeywordSpaceDoc)
 
 	if s.Index != nil {
 		doc = append(

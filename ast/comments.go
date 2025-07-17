@@ -51,6 +51,7 @@ func (c Comments) LeadingDoc() prettier.Doc {
 	return doc
 }
 
+// CommentsToDoc TODO(output-comments): Consolidate these helper functions
 func CommentsToDoc(comments []*Comment) prettier.Doc {
 	var doc prettier.Concat
 	for _, c := range comments {

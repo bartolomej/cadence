@@ -220,14 +220,18 @@ fun main() {
 func TestPrettyIfStatement(t *testing.T) {
 	t.Run("line comments", func(t *testing.T) {
 		testPretty(t, `
-// before if
-if someCondition {
-	// noop
+fun main() {
+	// before if
+	if someCondition {
+		// noop
+	}
 }
 `, `
-// before if
-if someCondition {
-	// noop
+fun main() {
+    // before if
+    if someCondition {
+        // noop
+    }
 }
 `)
 	})
@@ -236,14 +240,18 @@ if someCondition {
 func TestPrettyForStatement(t *testing.T) {
 	t.Run("line comments", func(t *testing.T) {
 		testPretty(t, `
-// before for
-for x in y {
-	// noop
+fun main() {
+	// before for
+	for x in y {
+		// noop
+	}
 }
 `, `
-// before for
-for x in y {
-	// noop
+fun main() {
+    // before for
+    for x in y {
+        // noop
+    }
 }
 `)
 	})
