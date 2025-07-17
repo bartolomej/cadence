@@ -75,8 +75,8 @@ fun bye() {}
 fun hello() {}
 
 // Random comment
-access(all)
 // Function bye
+access(all)
 fun bye() {}
 `)
 	})
