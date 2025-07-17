@@ -149,6 +149,7 @@ event Hello()
 `)
 	})
 
+	// TODO(output-comments): Resolve same parameter printing issue as for the function test case
 	t.Run("param line comments", func(t *testing.T) {
 		testPretty(t, `
 /// Hello event
@@ -258,6 +259,8 @@ fun main() {
 }
 
 func TestPrettyCommentingPatterns(t *testing.T) {
+
+	// TODO(output-comments): Do we need to add newline tracking to the token/ast node comments (rename to trivia)?
 	t.Run("large section markers with spacing", func(t *testing.T) {
 		testPretty(t, `
 /**************************
